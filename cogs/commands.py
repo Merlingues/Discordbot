@@ -142,3 +142,4 @@ class SalesCommands(commands.Cog):
 
 async def setup(bot):
     await bot.add_cog(Mutus(bot))
+    await bot.add_cog(SalesCommands(bot))
