@@ -21,13 +21,14 @@ class Mutus(commands.Cog):
     """ CONFIGURATION """
     Role_Name = "SACERDOS"
     Role_ID = int(os.getenv("SACERDOS_ID"))
-    SELF_MUTE = 300
+    SELF_MUTE = 180
     OTHER_MUTE = 120
     COOLDOWN = 2700
 
 
+
     """ MUTE VOCAL """
-    async def mute_member(self, member: discord.Member, duration: int):
+    async def mute_member(self, member, duration):
         if not member.voice:
             return
 
@@ -59,7 +60,7 @@ class Mutus(commands.Cog):
 
         roll = random.uniform(0, 100)
 
-        # 99% → RIEN
+        # 95% → RIEN
         if roll <= 95:
             await interaction.response.send_message("...")
             return
