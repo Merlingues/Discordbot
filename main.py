@@ -9,15 +9,16 @@ load_dotenv()
 
 intents = discord.Intents.default()
 intents.message_content = True 
-
+intents.voice_states = True    
+intents.members = True
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
 @bot.event
 async def on_ready():
-    # On synchronise l'arbre ici, une fois que le bot est prêt et les cogs chargés
+    # On synchronise globalement (prend un peu plus de temps à apparaître, mais pas besoin d'ID)
     await bot.tree.sync()
-    print(f"Connecté et commandes synchronisées pour {bot.user} !")
+    print(f"✅ Bot prêt ! Toutes les commandes ont été synchronisées globalement pour {bot.user}")
     
 async def load_extensions():
     try:
@@ -29,7 +30,7 @@ async def load_extensions():
         print("✅ Cog 'commands' chargé avec succès !")
         await bot.load_extension("roles.sacerdos")
         print("✅ Role 'Sacerdos' chargé avec succès")
-        await bot.load_extension("role.poliorcetiste")
+        await bot.load_extension("roles.poliorcetiste")
         print("✅ Role 'Poliorcetiste' chargé avec succès")
     except Exception as e:
         print(f"❌ Erreur lors du chargement du Cog : {e}")
