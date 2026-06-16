@@ -2,3 +2,5 @@ discord.py
 aiohttp
 python-dotenv
 yt-dlp
+PyNaCl
+discord.py["voice"]
