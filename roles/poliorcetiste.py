@@ -80,11 +80,10 @@ class Catapulte(commands.Cog):
             )
             return
         else:
-            members = [m for m in interaction.user.voice.channel.members if not m.bot]
-
-            if len(members) <= 1:
-                await interaction.response.send_message("Tu es solo mon reuf.", ephemeral=True)
-                return
+            members = [                
+                m for m in interaction.user.voice.channel.members
+                if not m.bot and m != interaction.user
+            ]
 
             perdant = random.choice(members)
 
