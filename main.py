@@ -28,12 +28,16 @@ async def load_extensions():
         print("✅ Cog 'Event' chargé avec succès !")
         await bot.load_extension("cogs.commands")
         print("✅ Cog 'commands' chargé avec succès !")
+
         await bot.load_extension("roles.sacerdos")
         print("✅ Role 'Sacerdos' chargé avec succès")
         await bot.load_extension("roles.poliorcetiste")
         print("✅ Role 'Poliorcetiste' chargé avec succès")
         await bot.load_extension("roles.carnifex")
         print("✅ Role 'Carnifex' chargé avec succès")
+        await bot.load_extension("roles.muscae_captor")
+        print("✅ Role 'Muscae Captor' chargé avec succès")
+        
     except Exception as e:
         print(f"❌ Erreur lors du chargement du Cog : {e}")
 
