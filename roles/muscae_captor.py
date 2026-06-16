@@ -12,7 +12,7 @@ from utils.audio import play_youtube_sound
 # Charger les variables .env
 load_dotenv()
 
-class Execute(commands.Cog):
+class Bzzzz(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.cooldowns = {}
@@ -49,3 +49,6 @@ class Execute(commands.Cog):
         url2 = "https://www.youtube.com/watch?v=ISsYS8KarW4"
         await play_youtube_sound(interaction, url2)
         await interaction.delete_original_response()
+
+async def setup(bot):
+    await bot.add_cog(Bzzzz(bot))
