@@ -24,7 +24,7 @@ class Bzzzz(commands.Cog):
 
     """COMMANDE /bzzzz """
     @app_commands.command(name="bzzzz", description="Chasse une mouche")
-    async def bzzzz(self, interaction: discord.Interaction, reason: str):
+    async def bzzzz(self, interaction: discord.Interaction):
 
         ok, message = check_command(
         interaction,
