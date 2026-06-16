@@ -13,7 +13,7 @@ intents.voice_states = True
 intents.members = True
 
 bot = commands.Bot(command_prefix="!", intents=intents)
-
+bot.shared = {}
 @bot.event
 async def on_ready():
     # On synchronise globalement (prend un peu plus de temps à apparaître, mais pas besoin d'ID)
@@ -37,6 +37,8 @@ async def load_extensions():
         print("✅ Role 'Carnifex' chargé avec succès")
         await bot.load_extension("roles.muscae_captor")
         print("✅ Role 'Muscae Captor' chargé avec succès")
+        await bot.load_extension("roles.sophiste")
+        print("✅ Role 'Sophiste' chargé avec succès")
         
     except Exception as e:
         print(f"❌ Erreur lors du chargement du Cog : {e}")
