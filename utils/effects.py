@@ -12,7 +12,7 @@ load_dotenv()
 
 
 """ MUTE VOCAL """
-def mute_member(self, member, duration):
+async def mute_member(self, member, duration):
     if not member.voice:
         return
 
@@ -25,7 +25,7 @@ def mute_member(self, member, duration):
         self.bot.shared["effect"] = None
 
 """ DEAFEN VOCAL """
-def deafen_member(self, member, duration):
+async def deafen_member(self, member, duration):
     if not member.voice:
         return
 

@@ -5,7 +5,7 @@ import asyncio
 import os
 from dotenv import load_dotenv
 from utils.check import check_command, apply_cooldown
-from utils.effect import mute_member, deafen_member
+from utils.effects import mute_member, deafen_member
 
 # Charger les variables .env
 load_dotenv()

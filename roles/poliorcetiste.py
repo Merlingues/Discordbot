@@ -7,7 +7,7 @@ import random
 import os
 from dotenv import load_dotenv
 from utils.check import check_command, apply_cooldown
-from utils.effects import deafea_member
+from utils.effects import deafen_member
 
 # Charger les variables .env
 load_dotenv()
