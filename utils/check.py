@@ -85,7 +85,11 @@ def check_command(
 
     if require_voice and not is_in_voice(user):
         return False, "Tu dois être dans un vocal pour utiliser cette commande."
-
+    if user.voice and user.voice.channel:
+        members = [m for m in user.voice.channel.members if not m.bot]
+        if len(members) < 2: 
+            return False, "T'es solo mon reuf."
+    
     remaining = cooldown_remaining(
         user.id,
         command_name,
