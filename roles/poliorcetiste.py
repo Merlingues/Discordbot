@@ -7,6 +7,7 @@ import random
 import os
 from dotenv import load_dotenv
 from utils.check import check_command, apply_cooldown
+from utils.effects import deafea_member
 
 # Charger les variables .env
 load_dotenv()
@@ -22,17 +23,6 @@ class Catapulte(commands.Cog):
     SELF_DEAFEN = 180
     OTHER_DEAFEN = 120
     COOLDOWN = 2700
-
-    """ DEAFEN VOCAL """
-    async def deafen_member(self, member, duration):
-        if not member.voice:
-            return
-
-        await member.edit(deafen=True)
-        await asyncio.sleep(duration)
-
-        if member.voice:
-            await member.edit(deafen=False)
 
     """COMMANDE /catapulte """
     @app_commands.command(name="catapulte", description="Tentative de tir de la pars du Poliorcetiste")
@@ -74,7 +64,7 @@ class Catapulte(commands.Cog):
 
         # 1% → TU TE FAIS MUTE
         elif roll <= 96:
-            asyncio.create_task(self.deafen_member(interaction.user, self.SELF_DEAFEN))
+            asyncio.create_task(deafen_member(interaction.user, self.SELF_DEAFEN))
             await interaction.response.send_message(
                 f"{interaction.user.display_name} s'est tiré dessus, il s'est mis en sourdine tout seul"
             )
@@ -87,9 +77,9 @@ class Catapulte(commands.Cog):
 
             perdant = random.choice(members)
 
-            asyncio.create_task(self.deafen_member(perdant, self.OTHER_DEAFEN))
+            asyncio.create_task(deafen_member(perdant, self.OTHER_DEAFEN))
             await interaction.response.send_message(
-                f"{interaction.user.display_name} a tire en plein dans la maison de {perdant}, il est devenu sourd"
+                f"{interaction.user.display_name} a tire en plein dans la maison de {perdant.display_name}, il est devenu sourd"
             )
 
 async def setup(bot):

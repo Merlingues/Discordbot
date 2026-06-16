@@ -7,6 +7,7 @@ import random
 import os
 from dotenv import load_dotenv
 from utils.check import check_command, apply_cooldown
+from utils.effects import mute_member
 
 # Charger les variables .env
 load_dotenv()
@@ -24,19 +25,6 @@ class Mutus(commands.Cog):
     SELF_MUTE = 180
     OTHER_MUTE = 120
     COOLDOWN = 2700
-
-
-
-    """ MUTE VOCAL """
-    async def mute_member(self, member, duration):
-        if not member.voice:
-            return
-
-        await member.edit(mute=True)
-        await asyncio.sleep(duration)
-
-        if member.voice:
-            await member.edit(mute=False)
 
     """ COMMANDE /mutus """
     @app_commands.command(name="mutus", description="Le sarcados reçoit une révélation ... ou pas")
@@ -67,7 +55,7 @@ class Mutus(commands.Cog):
 
         # 1% → TU TE FAIS MUTE
         elif roll <= 96:
-            asyncio.create_task(self.mute_member(interaction.user, self.SELF_MUTE))
+            asyncio.create_task(mute_member(interaction.user, self.SELF_MUTE))
             await interaction.response.send_message(
                 f"{interaction.user.display_name} a soulé le divin, il s'est fait mute"
             )
@@ -110,7 +98,7 @@ class Mutus(commands.Cog):
                 await interaction.user.send("Choix invalide.")
                 return
 
-            asyncio.create_task(self.mute_member(target, self.OTHER_MUTE))
+            asyncio.create_task(mute_member(target, self.OTHER_MUTE))
             await interaction.user.send(
                 f"{target.display_name} a été mute par le divin grâce à {interaction.user.display_name}"
             )
