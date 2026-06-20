@@ -7,7 +7,7 @@ import random
 import os
 from dotenv import load_dotenv
 from utils.check import check_command, apply_cooldown
-from utils.audio import play_youtube_sound
+from utils.audio import add_musique
 
 # Charger les variables .env
 load_dotenv()
@@ -45,9 +45,9 @@ class Bzzzz(commands.Cog):
         """ LANCEMENT DU SON DE LA MOUCHE """
         url = "https://www.youtube.com/watch?v=bcuKTheCcsE"
         await interaction.response.defer(ephemeral=True)
-        await play_youtube_sound(interaction, url)
+        await add_musique(interaction, url)
         url2 = "https://www.youtube.com/watch?v=ISsYS8KarW4"
-        await play_youtube_sound(interaction, url2)
+        await add_musique(interaction, url2)
         await interaction.delete_original_response()
 
 async def setup(bot):
