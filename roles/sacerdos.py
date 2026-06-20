@@ -8,6 +8,7 @@ import os
 from dotenv import load_dotenv
 from utils.check import check_command, apply_cooldown
 from utils.effects import mute_member
+from utils.UI import VoteView
 
 # Charger les variables .env
 load_dotenv()
@@ -63,45 +64,42 @@ class Mutus(commands.Cog):
 
         # 4% → CHOIX DANS LE VOCAL
         else:
-            
-            members = [                
+            members = [
                 m for m in interaction.user.voice.channel.members
                 if not m.bot and m != interaction.user
             ]
 
-            try:
-                await interaction.user.send(
-                    "Choisis une personne à mute :\n" +
-                    "\n".join([m.display_name for m in members if m != interaction.user])
-                )
-            except:
-                await interaction.response.send_message("MP bloqués. ❌", ephemeral=True)
-                return
+            choices = [m.display_name for m in members]
+            voters = [interaction.user.id]
 
-            await interaction.response.send_message("Regarde tes MP 👀", ephemeral=True)
+            async def on_vote_finish(result, original_interaction):
+                if not result["valid"] or not result["winner"]:
+                    return "Action annulée ou invalide."
+                
+                target = discord.utils.get(members, display_name=result["winner"])
+                
+                if target:
+                    asyncio.create_task(mute_member(target, self.OTHER_MUTE))
+                    return f"**{target.display_name}** a été mute par le divin grâce à {interaction.user.display_name} !"
+                
+                return "Erreur lors de la récupération de la cible."
 
-            def check(msg):
-                return msg.author == interaction.user and isinstance(msg.channel, discord.DMChannel)
-
-            try:
-                reply = await self.bot.wait_for("message", check=check, timeout=30)
-            except:
-                await interaction.user.send("Temps écoulé.")
-                return
-
-            target = discord.utils.find(
-                lambda m: m.display_name == reply.content,
-                members
+            vote_view = VoteView(
+                interaction=interaction,
+                question="Choisis une personne à mute :",
+                choices=choices,
+                allowed_users=voters,
+                timeout=30,
+                on_finish=on_vote_finish
             )
 
-            if not target or target == interaction.user:
-                await interaction.user.send("Choix invalide.")
-                return
-
-            asyncio.create_task(mute_member(target, self.OTHER_MUTE))
-            await interaction.user.send(
-                f"{target.display_name} a été mute par le divin grâce à {interaction.user.display_name}"
+            await interaction.response.send_message(
+                embed=vote_view.build_embed(),
+                view=vote_view,
+                ephemeral=True
             )
+            
+            vote_view.message = await interaction.original_response()
 
 async def setup(bot):
     await bot.add_cog(Mutus(bot))
