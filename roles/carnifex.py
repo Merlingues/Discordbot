@@ -7,6 +7,8 @@ import random
 import os
 from dotenv import load_dotenv
 from utils.check import check_command, apply_cooldown
+from utils.general import vkick_member, skick_member
+
 
 # Charger les variables .env
 load_dotenv()
@@ -21,17 +23,6 @@ class Execute(commands.Cog):
     Role_ID = int(os.getenv("CARNIFEX_ID"))
     COOLDOWN = 43200
 
-    """ VOCAL KICK """
-    async def vkick_member(self, member):
-        if not member.voice:
-            return
-        await member.move_to(None)
-        
-    """ SERVEUR KCIK"""
-    async def skick_member(self, member, *, reason: str):
-        if not member.voice:
-            return
-        await member.kick(reason=reason)
 
     """COMMANDE /execute """
     @app_commands.command(name="execute", description="Execute les coupables d'infractions")
@@ -70,7 +61,7 @@ class Execute(commands.Cog):
             
             perdant = random.choice(members)
             
-            asyncio.create_task(self.vkick_member(perdant))
+            asyncio.create_task(vkick_member(perdant))
             await interaction.response.send_message(
                 f"{perdant} est coupable de {reason}, {self.Role_Name} dégages moi ca"
             )
@@ -83,7 +74,7 @@ class Execute(commands.Cog):
 
             perdant = random.choice(members)
 
-            asyncio.create_task(self.skick_member(perdant, reason=reason))
+            asyncio.create_task(skick_member(perdant, reason=reason))
             await interaction.response.send_message(
                 f"{perdant} à été kick du serveur, pour la gravité de son crime : **{reason.upper()}**"
             )
