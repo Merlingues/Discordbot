@@ -2,11 +2,15 @@ import discord
 import random
 
 """ SEND IMAGE """
-async def send_image(destination, source: str, local: bool = True):
-    if local:
-        await destination.send(file=discord.File(source))
+async def send_image(interaction: discord.Interaction, description: str, image_url: str, color: discord.Color = discord.Color.blurple()):
+ 
+    embed = discord.Embed(description=description, color=color)
+    embed.set_image(url=image_url)
+    
+    if interaction.response.is_done():
+        await interaction.followup.send(embed=embed)
     else:
-        await destination.send(content=source)
+        await interaction.response.send_message(embed=embed)
 
 """ VOCAL KICK """
 async def vkick_member(self, member):
