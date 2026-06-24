@@ -61,7 +61,7 @@ class Pêche(commands.Cog):
                 "url": os.getenv("CONGRE_URL")
             },
             "Thunnus thynnus": {
-                "poid": [45.1, 95.0], 
+                "poid": [45.1, 90.0], 
                 "url": os.getenv("THON_URL")
             }
         }
@@ -87,11 +87,11 @@ class Pêche(commands.Cog):
             url_poisson = poisson[nom_poisson]["url"]
 
 
-        if roll <= 950 :
+        if roll <= 900 :
             texte_poisson = f"Le grand {self.Role_Name.lower()} à pêcher un {nom_poisson} de {poid} kg"
             await send_image(interaction=interaction, description=texte_poisson, image_url=url_poisson, color=discord.Color.blue())
 
-        elif roll <= 960 :
+        elif roll <= 920 :
             await vchange_member(member=interaction.user, salon_cible=salon_id)
             texte_colere = f"Posëidon est en colère contre le grand {self.Role_Name.lower()}.\n Il s'est fait bouger dans le channel : {salon_name}."
             

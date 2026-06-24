@@ -47,7 +47,7 @@ class Execute(commands.Cog):
         roll = random.randint(0, 1000)
 
         # 95% → RIEN
-        if roll <= 950:
+        if roll <= 900:
             await interaction.response.send_message(f"Un peu de patience {self.Role_Name}, dans ce vocal personne n'est coupable de {reason}")
             return
 

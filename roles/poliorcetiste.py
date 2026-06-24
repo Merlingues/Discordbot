@@ -58,12 +58,12 @@ class Catapulte(commands.Cog):
 
 
         # 95% → RIEN
-        if roll <= 95:
+        if roll <= 90:
             await interaction.response.send_message(f"Le {self.Role_Name} a loupé son tir de {degree}° {direction}")
             return
 
         # 1% → TU TE FAIS MUTE
-        elif roll <= 96:
+        elif roll <= 92:
             asyncio.create_task(deafen_member(interaction.user, self.SELF_DEAFEN))
             await interaction.response.send_message(
                 f"{interaction.user.display_name} s'est tiré dessus, il s'est mis en sourdine tout seul"

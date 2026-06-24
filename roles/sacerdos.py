@@ -50,12 +50,12 @@ class Mutus(commands.Cog):
         roll = random.uniform(0, 100)
 
         # 95% → RIEN
-        if roll <= 95:
+        if roll <= 90:
             await interaction.response.send_message("...")
             return
 
         # 1% → TU TE FAIS MUTE
-        elif roll <= 96:
+        elif roll <= 92:
             asyncio.create_task(mute_member(interaction.user, self.SELF_MUTE))
             await interaction.response.send_message(
                 f"{interaction.user.display_name} a soulé le divin, il s'est fait mute"
