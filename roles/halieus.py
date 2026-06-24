@@ -40,28 +40,29 @@ class Pêche(commands.Cog):
         
         apply_cooldown (interaction.user.id, "pêche", self.cooldowns)
 
-        salon_id, salon_name = random_salon(member=interaction.user)
-        url_colere = "https://cdn.shopify.com/s/files/1/0655/2633/3707/files/greek-mythology-god-poseido_480x480.jpg?v=1726238198"
+        salon_id, salon_name = await random_salon(member=interaction.user)
+        url_colere = os.getenv("COLERE_URL")
+
         poisson = {
-            "Goujon d'Aristote": {
-                "poid": [0.1, 3.0],
-                "url": "https://cdn.discordapp.com/attachments/TON_ID/image_petit.jpg"
+            "Sparus aurata": {
+                "poid": [0.1, 3.0], 
+                "url": os.getenv("GOUJON_URL")
             },
-            "Bar de Phocée": {
-                "poid": [3.1, 10.0],
-                "url": "https://cdn.discordapp.com/attachments/TON_ID/image_moyen.jpg"
+            "Dicentrarchus labrax": {
+                "poid": [3.1, 10.0], 
+                "url": os.getenv("BAR_URL")
             },
-            "Murène de Crète": {
-                "poid": [10.1, 15.0],
-                "url": "https://cdn.discordapp.com/attachments/TON_ID/image_murene.jpg"
+            "Muraena helena": {
+                "poid": [10.1, 15.0], 
+                "url": os.getenv("MURENA_URL")
             },
-            "Thon rouge de Sicile": {
-                "poid": [15.1, 45.0],
-                "url": "https://cdn.discordapp.com/attachments/TON_ID/image_thon.jpg"
+            "Conger conger": {
+                "poid": [15.1, 45.0], 
+                "url": os.getenv("CONGRE_URL")
             },
-            "Monstre des abysses de Charybde": {
-                "poid": [45.1, 95.0],
-                "url": "https://cdn.discordapp.com/attachments/TON_ID/image_monstre.jpg"
+            "Thunnus thynnus": {
+                "poid": [45.1, 95.0], 
+                "url": os.getenv("THON_URL")
             }
         }
 
@@ -70,34 +71,31 @@ class Pêche(commands.Cog):
 
 
         if poid <= 3.0:
-            nom_poisson = "Goujon d'Aristote"
+            nom_poisson = "Sparus aurata"
             url_poisson = poisson[nom_poisson]["url"]
         elif poid <= 10.0:
-            nom_poisson = "Bar de Phocée"
+            nom_poisson = "Dicentrarchus labrax"
             url_poisson = poisson[nom_poisson]["url"]
         elif poid <= 15.0:
-            nom_poisson = "Murène de Crète"
+            nom_poisson = "Muraena helena"
             url_poisson = poisson[nom_poisson]["url"]
-        elif poid <= 90:
-            nom_poisson = "Thon rouge de Sicile"
+        elif poid <= 45:
+            nom_poisson = "Conger conger"
             url_poisson = poisson[nom_poisson]["url"]
         else:
-            nom_poisson = "Monstre des abysses de Charybde"
+            nom_poisson = "Thunnus thynnus"
             url_poisson = poisson[nom_poisson]["url"]
 
 
         if roll <= 950 :
-            await interaction.response.send_message(
-                f"Le grand {self.Role_Name.lower()} à pêcher un {nom_poisson} de {poid} kg"
-            )
-            await send_image(destination=interaction.channel, source=url_poisson, local=False)
+            texte_poisson = f"Le grand {self.Role_Name.lower()} à pêcher un {nom_poisson} de {poid} kg"
+            await send_image(interaction=interaction, description=texte_poisson, image_url=url_poisson, color=discord.Color.blue())
 
         elif roll <= 960 :
             await vchange_member(member=interaction.user, salon_cible=salon_id)
-            await interaction.response.send_message(
-                f"Posëidon est en colère contre le grand {self.Role_Name.lower()}.\n Il s'est fais bouger dans le channel : {salon_name}."
-            )
-            await send_image(destination=interaction.channel, source=url_colere, local=False)
+            texte_colere = f"Posëidon est en colère contre le grand {self.Role_Name.lower()}.\n Il s'est fait bouger dans le channel : {salon_name}."
+            
+            await send_image(interaction=interaction, description=texte_colere, image_url=url_colere, color=discord.Color.red())
         else:
             members = [                
                 m for m in interaction.user.voice.channel.members
@@ -106,11 +104,9 @@ class Pêche(commands.Cog):
 
             perdant = random.choice(members)
 
-            vchange_member(member=perdant, salon_cible=salon_id)
-            await interaction.response.send_message(
-                f"Posëidon est en colère contre le grand {perdant.display_name}.\n Il s'est fais bouger dans le channel : {salon_name}."
-            )
-            await send_image(destination=interaction.channel, source=url_colere, local=False)
+            await vchange_member(member=perdant, salon_cible=salon_id)
+            texte_colere = f"Posëidon est en colère contre le grand {perdant.display_name}.\n Il s'est fais bouger dans le channel : {salon_name}."
+            await send_image(interaction=interaction, description=texte_colere, image_url=url_colere, color=discord.Color.red())
 
 async def setup(bot):
     await bot.add_cog(Pêche(bot))
