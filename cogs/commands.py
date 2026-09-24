@@ -1,5 +1,5 @@
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 from discord import app_commands
 import asyncio
 import time
@@ -9,7 +9,8 @@ from dotenv import load_dotenv
 from utils.audio import (
     add_musique, add_playlist, quit_vocal, 
     skip_musique, now_playing, pause_musique, 
-    resume_musique, check_vocal_access
+    resume_musique, check_vocal_access,
+    queues, current_tracks
 )
 from utils.UI import VoteView
 
@@ -36,6 +37,26 @@ class MusicCommands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+#Deconnexion automatique du bot
+    @commands.Cog.listener()
+    async def on_voice_state_update(self, member, before, after):
+        if before.channel is not None:
+            voice_client = member.guild.voice_client
+
+            if voice_client and voice_client.channel == before.channel:
+                members = [m for m in before.channel.members if not m.bot]
+                if len(members) == 0:
+                    queues.pop(member.guild.id, None)
+                    current_tracks.pop(member.guild.id, None)
+
+                    if voice_client.is_playing() or voice_client.is_paused():
+                        voice_client.stop()
+
+                    try:
+                        await voice_client.disconnect()
+                    except Exception:
+                        pass
+                    
     @app_commands.command(name="add_musique", description="Ajoute une musique seule à la file d'attente.")
     async def cmd_add_musique(self, interaction: discord.Interaction, url: str):
         await interaction.response.defer()
@@ -103,6 +124,7 @@ class MusicCommands(commands.Cog):
         )
         
         vote_view.message = await interaction.original_response()
+
 
 async def setup(bot):
     await bot.add_cog(SalesCommands(bot))
