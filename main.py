@@ -28,6 +28,8 @@ async def load_extensions():
         print("✅ Cog 'Event' chargé avec succès !")
         await bot.load_extension("cogs.commands")
         print("✅ Cog 'commands' chargé avec succès !")
+        await bot.load_extension("cogs.moderation")
+        print("✅ Cog 'moderation' chargé avec succès !")
 
         await bot.load_extension("roles.sacerdos")
         print("✅ Role 'Sacerdos' chargé avec succès")
