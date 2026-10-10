@@ -1,0 +1,42 @@
+[tls @ 0x5fa328447800] Error in the pull function.
+[tls @ 0x5fa328447800] IO error: Connection reset by peer
+[https @ 0x5fa328443dc0] Will reconnect at 2195440 in 0 second(s), error=Connection reset by peer.
+[tls @ 0x6213d006c880] Error in the pull function.
+[tls @ 0x6213d006c880] IO error: Connection reset by peer
+[https @ 0x6213d0068e00] Will reconnect at 2310128 in 0 second(s), error=Connection reset by peer.
+[tls @ 0x765858018340] Error in the pull function.
+[tls @ 0x765858018340] IO error: Connection reset by peer
+[https @ 0x6213d0068e00] Will reconnect at 2818032 in 0 second(s), error=Connection reset by peer.
+[tls @ 0x5a9254bca880] Error in the pull function.
+[tls @ 0x5a9254bca880] IO error: Connection reset by peer
+[https @ 0x5a9254bc6e00] Will reconnect at 1523712 in 0 second(s), error=Connection reset by peer.
+[tls @ 0x7cc574008980] Error in the pull function.
+[tls @ 0x7cc574008980] IO error: Connection reset by peer
+[https @ 0x5a9254bc6e00] Will reconnect at 2064384 in 0 second(s), error=Connection reset by peer.
+[tls @ 0x638e8aeb2880] Error in the pull function.
+[tls @ 0x638e8aeb2880] IO error: Connection reset by peer
+[https @ 0x638e8aeaee00] Will reconnect at 2195440 in 0 second(s), error=Connection reset by peer.
+[tls @ 0x55c0c2318880] Error in the pull function.
+[tls @ 0x55c0c2318880] IO error: Connection reset by peer
+[https @ 0x55c0c2314e00] Will reconnect at 2048000 in 0 second(s), error=Connection reset by peer.
+[tls @ 0x7ea2700016c0] Error in the pull function.
+[tls @ 0x7ea2700016c0] IO error: Connection reset by peer
+[https @ 0x55c0c2314e00] Will reconnect at 2686960 in 0 second(s), error=Connection reset by peer.
+ERROR: [youtube] HMfU5zp0fw0: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies
+ERROR: [youtube] Rm0PDRPu-qw: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies
+ERROR: [youtube] HMfU5zp0fw0: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies
+[tls @ 0x58782088f880] Error in the pull function.
+[tls @ 0x58782088f880] IO error: Connection reset by peer
+[https @ 0x58782088be00] Will reconnect at 1589248 in 0 second(s), error=Connection reset by peer.
+[tls @ 0x7190e401a180] Error in the pull function.
+[tls @ 0x7190e401a180] IO error: Connection reset by peer
+[https @ 0x58782088be00] Will reconnect at 2129904 in 0 second(s), error=Connection reset by peer.
+[tls @ 0x58782088f880] Error in the pull function.
+[tls @ 0x58782088f880] IO error: Connection reset by peer
+[https @ 0x58782088be00] Will reconnect at 2523120 in 0 second(s), error=Connection reset by peer.
+[tls @ 0x6062b6712880] Error in the pull function.
+[tls @ 0x6062b6712880] IO error: Connection reset by peer
+[https @ 0x6062b670ee00] Will reconnect at 1687552 in 0 second(s), error=Connection reset by peer.
+[tls @ 0x71acd000b200] Error in the pull function.
+[tls @ 0x71acd000b200] IO error: Connection reset by peer
+[https @ 0x6062b670ee00] Will reconnect at 2179056 in 0 second(s), error=Connection reset by peer.

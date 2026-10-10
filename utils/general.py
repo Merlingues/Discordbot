@@ -1,5 +1,8 @@
 import discord
 import random
+import asyncio
+import os
+from dotenv import load_dotenv
 
 """ SEND IMAGE """
 async def send_image(interaction: discord.Interaction, description: str, image_url: str, color: discord.Color = discord.Color.blurple()):
@@ -40,3 +43,18 @@ async def random_salon(member: discord.Member):
     salon_cible = random.choice(serveur.voice_channels)
 
     return salon_cible.id, salon_cible.name
+
+""" PRISON MOVE """
+async def move_prison(member, channel_id, timelimit, alone_tasks):
+    prison = int(os.getenv("PRISON_CHANNEL_ID"))
+    try :
+        await asyncio.sleep(timelimit)
+        if member.voice and member.voice.channel and member.voice.channel.id == channel_id:
+            prison_channel = member.guild.get_channel(prison)
+            if prison_channel :
+                await member.move_to(prison_channel)
+    except asyncio.CancelledError:
+        pass
+    finally:
+        if member.id in alone_tasks:
+            del alone_tasks[member.id]

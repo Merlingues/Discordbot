@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
+from utils.general import move_prison
 import os
+import asyncio
 
 # Ta liste contient désormais des ID textuels
 EVENT_ID = ["SALES_ROLE"] 
@@ -8,7 +10,8 @@ EVENT_ID = ["SALES_ROLE"]
 class Event(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        
+
+        #Event sales
         channel_id_env = os.getenv('SALES_CHANNEL_ID')
         self.channel_id = int(channel_id_env) if channel_id_env else 0
         
@@ -18,6 +21,11 @@ class Event(commands.Cog):
         if self.role_id == 0:
             print("SALES_ROLE_ID manquant ou invalide")
 
+        #Event Prison
+        self.alone_tasks = {}
+        self.TIME_LIMIT = 30 * 60
+
+    """ EVENT SALES """
     @commands.Cog.listener()
     async def on_ready(self):
         print("Event cog is ready!")
@@ -155,5 +163,53 @@ class Event(commands.Cog):
             await member.remove_roles(role)
             print(f"Removed role {role.name} from {member.display_name}")
 
+    """ EVENT PRISON """
+    @commands.Cog.listener() 
+    async def on_voice_state_update(self, member, before, after):
+        # On ignore si le membre n'a pas changé de salon
+        if before.channel == after.channel:
+            return
+
+        def check_channel(channel):
+            if not channel:
+                return
+
+            prison_id = int(os.getenv("PRISON_CHANNEL_ID"))
+            if channel.id == prison_id:
+                return
+
+            # CAS 1 : Quelqu'un se retrouve seul
+            if len(channel.members) == 1:
+                alone_member = channel.members[0]
+                if alone_member.id not in self.alone_tasks:                  
+                    task = self.bot.loop.create_task(
+                        move_prison(
+                            alone_member,     # member
+                            channel.id,       # channel_id
+                            self.TIME_LIMIT,  # timelimit
+                            self.alone_tasks  # alone_tasks
+                        )
+                    )
+                    self.alone_tasks[alone_member.id] = task
+
+            # CAS 2 : Quelqu'un rejoint, annulation des chronomètres
+            elif len(channel.members) > 1:
+                for current_member in channel.members:
+                    if current_member.id in self.alone_tasks:
+                        self.alone_tasks[current_member.id].cancel()
+                        del self.alone_tasks[current_member.id]
+
+        # 1. Vérification du salon quitté
+        if before.channel:
+            check_channel(before.channel)
+            # Annulation de la tâche du membre qui vient de partir s'il en avait une
+            if member.id in self.alone_tasks:
+                self.alone_tasks[member.id].cancel()
+                del self.alone_tasks[member.id]
+
+        # 2. Vérification du salon rejoint
+        if after.channel:
+            check_channel(after.channel)
+            
 async def setup(bot):
     await bot.add_cog(Event(bot))
